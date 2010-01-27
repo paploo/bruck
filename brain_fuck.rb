@@ -1,15 +1,24 @@
+# TODO:
+# + Make the debug print the tape with the head position integrated into it.
+# + Make the debug print only show the tape for no more than 8 entries on each side of the head.
+# + Make the debug mode complete with breakpoints, stepping, and inspection command entry.
+# + Make the token number's width in debug output be determined via the ceiling of the log10 of the program length.
 class BrainFuck
   
-  def initialize(program, cells=30000)
+  def initialize(program, opts={})
+    opts = {:cells => 30000, :debug => true}.merge(opts)
+    
     @program = program
-    @cells = cells
+    @cells = opts[:cells]
     @tape = Array.new(@cells,0)
     @head_position = 0
     @byte_code = nil
     @program_position = 0
-    @debug = true
+    @debug = opts[:debug]
     @output_buffer = []
   end
+  
+  attr_reader :tape
   
   def compile
     valid_token_bytes = ['<', '>', '+', '-', ',', '.', '[', ']'].map {|c| c.ord} # Really, I should do a self.methods, and look at the execute methods.
@@ -17,8 +26,10 @@ class BrainFuck
   end
   
   def debug_string(executed_byte_token)
-    #return "#{current_token}:#{@program_position}:#{@byte_code.inspect} - #{@head_position}:#{@tape.inspect} --> #{@output_buffer.inspect}"
-    return "#{executed_byte_token.chr} @ #{@program_position} - #{@head_position}:#{@tape.inspect} --> #{@output_buffer.inspect}"
+    program_pos = "%0#{Math.log10(@byte_code.length).ceil}d" % @program_position
+    head_pos = "%0#{Math.log10(@cells).ceil}d" % @head_position
+    tape_text = tape.hilight_position(@head_position)
+    return "#{executed_byte_token.chr} #{program_pos} - #{@head_position} #{tape_text} --> #{@output_buffer.inspect}"
   end
   
   def run
@@ -151,7 +162,22 @@ class BrainFuck
   
 end
 
-bf = BrainFuck.new("++++[.--]>+.", 10)
-puts bf.inspect
-bf.run
-puts bf.inspect
+class Array
+  
+  def hilight_position(index, width=8)
+    min_index = [index-width, 0].max
+    max_index = [index+width, self.length-1].min
+    
+    buf = []
+    buf += self[min_index..index-1] if index > 0
+    buf << '<' + self[index].to_s + '>' unless index < 0 || index >= self.length
+    buf += self[index+1..max_index] if index < self.length
+    return min_index.to_s + ':[' + buf.map {|x| x.to_s.rjust(1)}.join(", ") + ']:' + max_index.to_s
+  end
+  
+end
+
+if( $0 == __FILE__ )
+  bf = BrainFuck.new("++++[.--]>+.<.", :cells => 8)
+  bf.run
+end
