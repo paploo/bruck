@@ -5,21 +5,33 @@ class BrainFuck
     @cells = cells
     @tape = Array.new(@cells,0)
     @head_position = 0
+    @byte_code = []
+    @program_position = 0
     @debug = true
     @output_buffer = []
-    @current_token = nil
+  end
+  
+  def compile
+    valid_token_bytes = ['<', '>', '+', '-', ',', '.', '[', ']'].map {|c| c.ord} # Really, I should do a self.methods, and look at the execute methods.
+    @byte_code = @program.bytes.to_a.select {|b| valid_token_bytes.include?(b) }
   end
   
   def run
-    @program.each_byte do |byte|
-      @current_token = byte.chr
-      m = "execute_#{byte}".to_sym
+    while( current_byte_token  )
+      m = "execute_#{current_byte_token}".to_sym
+      STDERR.puts "#{current_byte_token.chr}:#{@program_position}:#{@byte_code.inspect} - #{@head_position}:#{@tape.inspect} --> #{@output_buffer.inspect}" if @debug
       self.send(m) if self.private_methods.include?(m)
-      STDERR.puts byte.chr + " - " + @head_position.to_s + ':' + @tape.inspect + " --> " + @output_buffer.inspect if @debug
+      @program_position += 1
     end
+    return @output_buffer
   end
   
   private
+  
+  def current_byte_token
+    @byte_code[@program_position]
+  end
+  
   
   def advance
     @head_position += 1
@@ -75,7 +87,7 @@ class BrainFuck
   # putchar(*p)
   def execute_46
     @output_buffer << get()
-    STDOUT.puts value
+    STDOUT.puts get()
   end
   
   # ,
@@ -88,19 +100,27 @@ class BrainFuck
   # [
   # while(*p){
   def execute_91
-    # If the value is zero, we have to fast-forward parsing to
-    # the next end.  If it is non-zero, we don' have to do anything.
+    if( get.zero? )
+      while(current_byte_token != ']'.ord)
+        @program_position += 1
+      end
+    end
   end
   
   # ]
   # }
   def execute_93
-    # Move to the beginning of the last loop.
+    while(current_byte_token != '['.ord)
+     puts current_byte_token.chr.inspect
+     @program_position -= 1
+    end
+    @program_position -= 1
   end
   
 end
 
-bf = BrainFuck.new("+++[.-]>+.", 10)
+bf = BrainFuck.new("++++[.--]>+.", 10)
+bf.compile
 puts bf.inspect
 bf.run
 puts bf.inspect
