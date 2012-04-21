@@ -30,10 +30,10 @@ The overall goal is to replace the main monoithic interpreter with one that:
 
 == Ideas
 
-+ Use a state register for storing which tape commands are run against.
-+ Have the program be able to switch tapes for fetching instructions.
-+ Designate a standard A,B tape for memory, I,O tape for input and output, and
+* Use a state register for storing which tape commands are run against.
+* Have the program be able to switch tapes for fetching instructions.
+* Designate a standard A,B tape for memory, I,O tape for input and output, and
   P,R tape for the program (one the initial program and one can be edited).
-+ One way to implement multiple tapes is to have head up/down operators for
+* One way to implement multiple tapes is to have head up/down operators for
   the read head, and one for the program counter, but these make addressing
   absolute and really just the same as 1000> and 1000< for most purposes.
