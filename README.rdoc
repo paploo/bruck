@@ -1,0 +1,39 @@
+= Overview
+
+A Ruby Implementation of the Turing tarpit language Brain Fuck.
+(See http://en.wikipedia.org/wiki/Brainfuck)
+
+= Contact
+
+Jeff Reinecke
+jeff@paploo.net
+
+= Info
+
+This is a first stab at an interpreter with the following language conventions:
+1. The tape length is finite (and set at program runtime).
+2. Tape values are Ruby integers, which means they can be arbitrarily large.
+3. Tape values may be negative.
+4. Anyting that is not a valid operation is ignored, allowing for inline comments
+
+See demo.rb for a quick demo.
+
+= TODO
+
+The overall goal is to replace the main monoithic interpreter with one that:
+1. Gemify it.
+2. Allows for debugging such as stepping and injecting arbitrary commands.
+3. Allows setting of the initial tape value.
+4. Extends to multiple tapes, each with a different head.
+5. Uses a tape to hold the program.
+6. Incorporation of numbers in the program as a repeat count for the next operator.
+
+== Ideas
+
++ Use a state register for storing which tape commands are run against.
++ Have the program be able to switch tapes for fetching instructions.
++ Designate a standard A,B tape for memory, I,O tape for input and output, and
+  P,R tape for the program (one the initial program and one can be edited).
++ One way to implement multiple tapes is to have head up/down operators for
+  the read head, and one for the program counter, but these make addressing
+  absolute and really just the same as 1000> and 1000< for most purposes.

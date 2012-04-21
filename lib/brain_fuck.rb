@@ -3,6 +3,7 @@
 # + Make the debug print only show the tape for no more than 8 entries on each side of the head.
 # + Make the debug mode complete with breakpoints, stepping, and inspection command entry.
 # + Make the token number's width in debug output be determined via the ceiling of the log10 of the program length.
+# + Set the initial tape state.
 class BrainFuck
   
   def initialize(program, opts={})
