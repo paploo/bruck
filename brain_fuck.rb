@@ -178,6 +178,12 @@ class Array
 end
 
 if( $0 == __FILE__ )
-  bf = BrainFuck.new("++++[.--]>+.<.", :cells => 8)
+  # Idea: since we can seek to a prev zero or a next zero, we can use those as markers with the value after it being the meaningful value.
+  # We'd have to start by changing a bunch of values to 1 first.
+  
+  prog = "input:+++++ clear:>[-]>[-]<< copy:[->+>+<<]>>[-<<+>>]<<" # This copies the value in cell 0 into cell 1, using cell 2 as a register, and leaves the head at cell 0.
+  #prog = "input1:++++ input2:+++ copy0to2:"
+  #prog = "+>++>+++>++++<<<[>]"
+  bf = BrainFuck.new(prog, :cells => 8)
   bf.run
 end
