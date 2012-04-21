@@ -11,10 +11,17 @@ second cell in the process.
 
   >[-<+>]<
 
-This can be run in the interpreter like so:
+We can first initialize the first two cells to the value of four and three, and
+place the i/o head on the first value with the following program:
 
-  bf = BrainfFuck.new('>[-<+>]<', :cells => 2, :debug => true)
+  ++++>+++<
+
+We can combine these to in a single program and run it in the interpreter like so:
+
+  bf = BrainfFuck.new('input:++++>+++< add:>[-<+>]<', :cells => 2, :debug => true)
   bf.run
+
+Note that I've used language extensions to label the sections.
 
 = Contact
 
