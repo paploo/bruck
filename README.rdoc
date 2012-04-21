@@ -3,6 +3,19 @@
 A Ruby Implementation of the Turing tarpit language Brain Fuck.
 (See http://en.wikipedia.org/wiki/Brainfuck)
 
+== Example
+
+As an example, the following program adds the numbers in two adjacent cells
+together, placing the result in the first cell but destroying the value of the
+second cell in the process.
+
+  >[-<+>]<
+
+This can be run in the interpreter like so:
+
+  bf = BrainfFuck.new('>[-<+>]<', :cells => 2, :debug => true)
+  bf.run
+
 = Contact
 
 Jeff Reinecke

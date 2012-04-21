@@ -14,4 +14,4 @@ end
 run('Copy', "input:+++++ clear:>[-]>[-]<< copy:[->+>+<<]>>[-<<+>>]<<")
 
 # This adds the first two values, destroying the second and placing the sum in the first.
-run('Add', "input:++++>+++ add:[-<+>]")
+run('Add', "input:++++>+++< add:>[-<+>]<")
