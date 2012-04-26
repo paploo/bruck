@@ -21,7 +21,46 @@ We can combine these to in a single program and run it in the interpreter like s
   bf = BrainfFuck.new('input:++++>+++< add:>[-<+>]<', :cells => 2, :debug => true)
   bf.run
 
-Note that I've used language extensions to label the sections.
+(Note that I've used language extensions to label the sections.)
+
+This program will then run with the following verbose output to STDERR:
+
+  + 01 - 0 0:[<1>, 0, 0, 0, 0, 0, 0, 0]:7 --> []
+  + 02 - 0 0:[<2>, 0, 0, 0, 0, 0, 0, 0]:7 --> []
+  + 03 - 0 0:[<3>, 0, 0, 0, 0, 0, 0, 0]:7 --> []
+  + 04 - 0 0:[<4>, 0, 0, 0, 0, 0, 0, 0]:7 --> []
+  > 05 - 1 0:[4, <0>, 0, 0, 0, 0, 0, 0]:7 --> []
+  + 06 - 1 0:[4, <1>, 0, 0, 0, 0, 0, 0]:7 --> []
+  + 07 - 1 0:[4, <2>, 0, 0, 0, 0, 0, 0]:7 --> []
+  + 08 - 1 0:[4, <3>, 0, 0, 0, 0, 0, 0]:7 --> []
+  < 09 - 0 0:[<4>, 3, 0, 0, 0, 0, 0, 0]:7 --> []
+  > 10 - 1 0:[4, <3>, 0, 0, 0, 0, 0, 0]:7 --> []
+  [ 11 - 1 0:[4, <3>, 0, 0, 0, 0, 0, 0]:7 --> []
+  - 12 - 1 0:[4, <2>, 0, 0, 0, 0, 0, 0]:7 --> []
+  < 13 - 0 0:[<4>, 2, 0, 0, 0, 0, 0, 0]:7 --> []
+  + 14 - 0 0:[<5>, 2, 0, 0, 0, 0, 0, 0]:7 --> []
+  > 15 - 1 0:[5, <2>, 0, 0, 0, 0, 0, 0]:7 --> []
+  ] 10 - 1 0:[5, <2>, 0, 0, 0, 0, 0, 0]:7 --> []
+  [ 11 - 1 0:[5, <2>, 0, 0, 0, 0, 0, 0]:7 --> []
+  - 12 - 1 0:[5, <1>, 0, 0, 0, 0, 0, 0]:7 --> []
+  < 13 - 0 0:[<5>, 1, 0, 0, 0, 0, 0, 0]:7 --> []
+  + 14 - 0 0:[<6>, 1, 0, 0, 0, 0, 0, 0]:7 --> []
+  > 15 - 1 0:[6, <1>, 0, 0, 0, 0, 0, 0]:7 --> []
+  ] 10 - 1 0:[6, <1>, 0, 0, 0, 0, 0, 0]:7 --> []
+  [ 11 - 1 0:[6, <1>, 0, 0, 0, 0, 0, 0]:7 --> []
+  - 12 - 1 0:[6, <0>, 0, 0, 0, 0, 0, 0]:7 --> []
+  < 13 - 0 0:[<6>, 0, 0, 0, 0, 0, 0, 0]:7 --> []
+  + 14 - 0 0:[<7>, 0, 0, 0, 0, 0, 0, 0]:7 --> []
+  > 15 - 1 0:[7, <0>, 0, 0, 0, 0, 0, 0]:7 --> []
+  ] 10 - 1 0:[7, <0>, 0, 0, 0, 0, 0, 0]:7 --> []
+  [ 16 - 1 0:[7, <0>, 0, 0, 0, 0, 0, 0]:7 --> []
+  < 17 - 0 0:[<7>, 0, 0, 0, 0, 0, 0, 0]:7 --> []
+
+This contains, from left to right: The instructions being exectued, the
+instruction pointer, the tape head index, the tape (with current position
+bracketed), and the output buffer.  (Note that the tape output also shows
+the index range that it is displaying on either side of the square brackets.)
+
 
 = Contact
 
